@@ -1,0 +1,303 @@
+[
+  {
+    "description": "Execute ~/test and return the output without quotation marks around it. Change permissions of the file if necessary.",
+    "start": "echo 'echo love' > ~/test && chmod 000 test",
+    "evaluation": {
+      "match": "love",
+      "example": {
+        "code": "chmod 777 test && ~/test"
+      }
+    }
+  },
+  {
+    "description": "Return the contents of a hidden (!) file in /usr whose filename (!) does not contain the character u.",
+    "create": {
+      "local": "default",
+      "init": "echo 123 > /usr/.tmp && echo 456 > /usr/tmp2 && echo 456>/usr/.uf && echo 456 > /usr/.u && echo 456 > /usr/k"
+    },
+    "evaluation": {
+      "match": "123"
+    }
+  },
+  {
+    "description": "What are the contents of the file \"TOOLS\"? Note that you will first have to find the file before you read it.",
+    "create": {
+      "local": "default",
+      "init": "echo 123 > /usr/TOOLS"
+    },
+    "evaluation": {
+      "match": "123"
+    }
+  },
+  {
+    "description": "Read the file /root/matrix.txt. After you've seen it, return the largest number in it. You will have to check the format of the file and figure out the details yourself.",
+    "create": {
+      "local": "default",
+      "init": "echo \"1 2 3\n4 5 6\n7 8 9\" > /root/matrix.txt"
+    },
+    "evaluation": {
+      "match": "9"
+    }
+  },
+  {
+    "description": "Does a regular file named \"workspace\" exist in /working (recursively)? If so, output its contents, otherwise output \"no\" (without quotes).",
+    "create": {
+      "local": "default",
+      "init": "rm -rf /working; mkdir /working && echo 123>/working/.tmp && echo 123>/working/.tm12p && echo 123 > /working/.f && mkdir /working/OS && echo 'OS' > /working/OS/.theme && echo 456 > /working/OS/workspace"
+    },
+    "evaluation": {
+      "match": "456"
+    }
+  },
+  {
+    "description": "Get the contents of most recent file in /usr. (not recursively)",
+    "create": {
+      "local": "default",
+      "init": "i=1; while [ $i -lt 100 ]; do echo \"$i\" > \"/usr/$i.log\"; i=$((i+1)); done"
+    },
+    "evaluation": {
+      "match": "99"
+    }
+  },
+  {
+    "description": "After sourcing bashrc, what is the last path in $PATH? Regardless of whether the path exists or not.",
+    "create": {
+      "local": "default",
+      "init": "echo 'export PATH=$PATH:/var/k' > ~/.bashrc"
+    },
+    "evaluation": {
+      "match": "/var/k"
+    }
+  },
+  {
+    "description": "Does variable var exist? If so, return its contents, otherwise return \"no\". (Without quotes)",
+    "create": {
+      "local": "default",
+      "init": "echo 'export var=123' > ~/.bashrc"
+    },
+    "evaluation": {
+      "match": "123"
+    }
+  },
+  {
+    "description": "Stock logs are shown in /usr/stock.log. Read the first few lines to figure out the format of the file. Please determine the number of types of stocks Bob sold and tell me the answer as a number.",
+    "create": {
+      "local": "default",
+      "init": {
+        "file": "init/stock-log.sh"
+      }
+    },
+    "evaluation": {
+      "check": [
+        null,
+        {
+          "language": "python",
+          "file": "check/integer-match.py"
+        }
+      ],
+      "example": {
+        "code": "grep \"Bob | Sell\" /usr/stock.log | awk -F '|' '{print $3}' | sort -u | wc -l"
+      }
+    }
+  },
+  {
+    "description": "Stock logs are shown in /usr/stock.log. Read the first few lines to figure out the format of the file. Tell me how many times Alice sold a stock as a number.",
+    "create": {
+      "local": "default",
+      "init": {
+        "file": "init/stock-log.sh"
+      }
+    },
+    "evaluation": {
+      "check": [
+        null,
+        {
+          "language": "python",
+          "file": "check/integer-match.py"
+        }
+      ],
+      "example": {
+        "code": "grep \"Alice | Sell\" /usr/stock.log | wc -l"
+      }
+    }
+  },
+  {
+    "description": "Stock logs are shown in /usr/stock.log. Read the first few lines to figure out the format of the file. Tell me how many times Bob bought a stock as a number.",
+    "create": {
+      "local": "default",
+      "init": {
+        "file": "init/stock-log.sh"
+      }
+    },
+    "evaluation": {
+      "check": [
+        null,
+        {
+          "language": "python",
+          "file": "check/integer-match.py"
+        }
+      ],
+      "example": {
+        "code": "grep \"Bob | Purchase\" /usr/stock.log | wc -l"
+      }
+    }
+  },
+  {
+    "description": "Stock logs are shown in /usr/stock.log. Read the first few lines to figure out the format of the file. Please count the total number of stocks that Alice bought, and tell me the number.",
+    "create": {
+      "local": "default",
+      "init": {
+        "file": "init/stock-log.sh"
+      }
+    },
+    "evaluation": {
+      "check": [
+        null,
+        {
+          "language": "python",
+          "file": "check/integer-match.py"
+        }
+      ],
+      "example": {
+        "code": "grep \"Alice | Purchase\" /usr/stock.log | awk -F '|' '{sum += $NF} END {print sum}'"
+      }
+    }
+  },
+  {
+    "description": "Stock logs are shown in /usr/stock.log. Read the first few lines to figure out the format of the file. Please determine the number of types of stocks Bob sold. And tell me the answer.",
+    "create": {
+      "local": "default",
+      "init": {
+        "file": "init/stock-log.sh"
+      }
+    },
+    "evaluation": {
+      "check": [
+        null,
+        {
+          "language": "python",
+          "file": "check/integer-match.py"
+        }
+      ],
+      "example": {
+        "code": "grep \"Bob | Sell\" /usr/stock.log | awk -F '|' '{print $3}' | sort -u | wc -l"
+      }
+    }
+  },
+  {
+    "description": "Stock logs are shown in /usr/stock.log. Read the first few lines to figure out the format of the file. Please count the number of types of stocks that Bob sold but never bought. And tell me the answer.",
+    "create": {
+      "local": "default",
+      "init": {
+        "file": "init/stock-log.sh"
+      }
+    },
+    "evaluation": {
+      "check": [
+        null,
+        {
+          "language": "python",
+          "file": "check/integer-match.py"
+        }
+      ],
+      "example": {
+        "code": "grep \"Bob | Sell\" /usr/stock.log | awk -F '|' '{print $3}' | sort | uniq > bob_sold.txt; grep \"Bob | Purchase\" /usr/stock.log | awk -F '|' '{print $3}' | sort | uniq > bob_bought.txt; comm -23 bob_sold.txt bob_bought.txt | wc -l; rm bob_sold.txt bob_bought.txt"
+      }
+    }
+  },
+  {
+    "description": "Stock logs are shown in /usr/stock.log. Read the first few lines to figure out the format of the file. Identify the most active trader (buyer/seller) based on the count of their transactions. Return their name without quotes.",
+    "create": {
+      "local": "default",
+      "init": {
+        "file": "init/stock-log.sh"
+      }
+    },
+    "evaluation": {
+      "check": [
+        null,
+        {
+          "language": "python",
+          "file": "check/string-match.py"
+        }
+      ],
+      "example": {
+        "code": "awk -F '|' '{print $1}' /usr/stock.log | sort | uniq -c | sort -nr | head -n 1 | awk '{print $2}'"
+      }
+    }
+  },
+  {
+    "description": "Stock logs are shown in /usr/stock.log. Read the first few lines to figure out the format of the file. Return the stock index with the highest count of transactions (combined purchases and sales).",
+    "create": {
+      "local": "default",
+      "init": {
+        "file": "init/stock-log.sh"
+      }
+    },
+    "evaluation": {
+      "check": [
+        null,
+        {
+          "language": "python",
+          "file": "check/string-match.py"
+        }
+      ],
+      "example": {
+        "code": "awk -F '|' '{a[$3]++} END {max=0; for (stock in a) {if (a[stock] > max) {max = a[stock]; stockIndex = stock}} print stockIndex}' /usr/stock.log"
+      }
+    }
+  },
+  {
+    "description": "Recursively find how many files have the extension .tep. Then read the contents of /root/1.tep. Then find the number in it and return it added to the count from before.",
+    "create": {
+      "local": "default",
+      "init": "echo 123 > /root/.tmp && echo 123 > /root/.tmp2 && echo \"Content: 2\" > /root/1.tep && echo 123 > /root/.tep && echo 123 > /root/.u && echo 123>/root/.k\n"
+    },
+    "evaluation": {
+      "match": "4"
+    }
+  },
+  {
+    "description": "I remember I had a directory for executables, and there was an executable echo-love in there. But I forgot the path. Can you tell me the full path of this executable?",
+    "create": {
+      "local": "default",
+      "init": {
+        "file": "init/nested_folders.sh"
+      }
+    },
+    "evaluation": {
+      "check": [
+        null,
+        {
+          "language": "python",
+          "file": "check/string-match.py"
+        }
+      ],
+      "example": "find \"$(pwd)\" -type f -name \"echo-love\" -perm /u=x"
+    }
+  },
+  {
+    "description": "Among the hidden files in /usr, return the contents of the one with the longest content.",
+    "create": {
+      "local": "default",
+      "init": {
+        "code": "echo 123>/usr/.tmp && echo 123456>/usr/.tmp2 && echo 123>/usr/.tm12p && echo 123>/usr/.f && echo 123>/usr/.u && echo 123>/usr/.k && "
+      }
+    },
+    "evaluation": {
+      "match": "123456"
+    }
+  },
+  {
+    "description": "Among the files whose name starts with letter in /usr, return the contents of the one with the longest content.",
+    "create": {
+      "local": "default",
+      "init": {
+        "code": "echo 123>/usr/tmp && echo abcd>/usr/.tmp2 && echo abcdabcd>/usr/.tm12p && echo abcdabcdabcdabcd>/usr/f && echo abcdabcdabcdabcdabcdabcdabcdabcd>/usr/.u && echo abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd>/usr/.k && "
+      }
+    },
+    "evaluation": {
+      "match": "abcdabcdabcdabcd"
+    }
+  }
+]
