@@ -1,4 +1,5 @@
 __pycache__
+configs/agents/openai-chat.yaml
 %*
 .idea
 .vscode
