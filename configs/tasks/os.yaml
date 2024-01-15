@@ -46,7 +46,7 @@ os-std:
         # - problem_file: data/os_interaction/data/3/*.json
         #   script_dir: data/os_interaction/scripts/3/
         #   index_prefix: "std-003-"
-        - problem_file: data/os_interaction/data/experiment/*.json
+        - problem_file: data/os_interaction/data/experiment/experiment.json
           script_dir: data/os_interaction/scripts/experiment/
           index_prefix: ""
         # - problem_file: data/os_interaction/data/5/*.json
