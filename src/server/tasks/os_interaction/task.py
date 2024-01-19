@@ -276,7 +276,9 @@ class OSInteraction(Task):
                 if "create" in i:
                     if "init" in i["create"]:
                         if type(i["create"]["init"]) is not list:
-                            config.init_script += [load_script(i["create"]["init"])]
+                            config.init_script += [
+                                load_script(script_obj=i["create"]["init"])
+                            ]
                         else:
                             config.init_script += [
                                 load_script(script_obj)
