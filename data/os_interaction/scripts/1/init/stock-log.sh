@@ -10,9 +10,9 @@ do
     # Randomly select values for each field
     name=${names[$RANDOM % ${#names[@]}]}
     action=${actions[$RANDOM % ${#actions[@]}]}
-    stock_index=$((RANDOM % 100))
-    count=$((RANDOM % 1000))
-    
+    stock_index="idx=$((RANDOM % 100))"
+    count="count=$((RANDOM % 1000))"
+
     # Write the line to the file
     echo "$name | $action | $stock_index | $count" >> /usr/stock.log
 done

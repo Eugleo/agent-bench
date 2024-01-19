@@ -10,9 +10,9 @@ do
     # Randomly select values for each field
     name=${names[$RANDOM % ${#names[@]}]}
     action=${actions[$RANDOM % ${#actions[@]}]}
-    stock_index=$((RANDOM % 100))
-    count=$((RANDOM % 1000))
-    comment=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 10 | head -n 1)
+    stock_index="idx=$((RANDOM % 100))"
+    count="count=$((RANDOM % 1000))"
+    comment=$(awk "NR==$RANDOM {print}" /usr/share/dict/words)
 
     # Write the line to the file
     echo "$name | $action | $stock_index | $count | $comment" >> /usr/stock.log
