@@ -12,7 +12,7 @@ do
     action=${actions[$RANDOM % ${#actions[@]}]}
     stock_index="idx=$((RANDOM % 100))"
     count="count=$((RANDOM % 1000))"
-    comment=$(awk "NR==$RANDOM {print}" /usr/share/dict/words)
+    comment=$(shuf -n 15 /usr/share/dict/words | tr '\n' ' ')
 
     # Write the line to the file
     echo "$name | $action | $stock_index | $count | $comment" >> /usr/stock.log
